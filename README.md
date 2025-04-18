@@ -45,8 +45,14 @@ The project utilizes a modified version of the **Sakila Sample Database**, repre
 
 ## Project Structure
 
-.├── images/│   └── star_schema_erd.png  # Database schema diagram├── src/│   └── env                  # Environment variable configuration (template or actual)├── .env                     # Main environment file (if not in src/) - Add to .gitignore!├── Advanced SQLt.ipynb   # Jupyter Notebook with analysis and queries└── README.md                # This file
-*(Adjust the structure above to precisely match your repository)*
+.
+├── images/
+│   └── star_schema_erd.png  # Database schema diagram
+├── src/
+│   └── env                  # Environment variable configuration (template or actual)
+├── .env                     # Main environment file (if not in src/) - Add to .gitignore!
+├── Advanced SQL.ipynb   # Jupyter Notebook with analysis and queries
+└── README.md                # This file
 
 ## Setup and Usage
 
