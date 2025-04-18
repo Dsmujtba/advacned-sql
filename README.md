@@ -103,7 +103,7 @@ To run the analysis presented in the Jupyter Notebook, follow these steps:
       # or
       jupyter notebook
       ```
-    * Open the `C3_W3_Assignment.ipynb` file.
+    * Open the `Advanced SQL.ipynb` file.
     * Execute the cells sequentially to connect to the database and run the SQL queries. The notebook connects using the credentials from the `.env` file and utilizes the `ipython-sql` magic commands.
 
 ## Business Questions & SQL Queries
