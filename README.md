@@ -1,118 +1,102 @@
-# Advanced SQL Practices: DVD Rental Analysis
+# Advanced SQL for DVD Rental Analytics: Extracting Business Insights
 
-## Overview
+In this project, I applied a comprehensive suite of advanced SQL techniques to dissect the Sakila sample database (representing a DVD rental business called "Rentio"). My primary objective was to move beyond basic queries and leverage sophisticated SQL capabilities to answer practical business questions, thereby demonstrating proficiency in data manipulation, complex querying, and analytical problem-solving crucial for Data Analyst, Data Engineer, and Business Intelligence roles.
 
-This project demonstrates the application of advanced SQL techniques to solve practical business questions using a sample DVD rental database (based on the MySQL Sakila sample database). The primary goal is to showcase proficiency in complex SQL querying, data manipulation, and analytical thinking relevant to Data Analyst, Data Engineer, and Business Intelligence roles.
+![Database Schema ERD](./images/star_schema_erd.png)
 
-The analysis focuses on extracting meaningful insights from rental transactions, customer behavior, film inventory, and store performance data.
+## Key Skills Applied & Achievements:
 
-## Skills Demonstrated
+Through this project, I demonstrated mastery and practical application of advanced SQL features, including:
 
-This project highlights expertise in various advanced SQL concepts, including:
+* **Complex Data Retrieval & Joins:** Expertly navigated a star schema, utilizing various `JOIN` types (primarily `INNER JOIN`) to synthesize information from multiple tables (e.g., `fact_rental`, `dim_film`, `dim_customer`).
+* **Query Structuring & Readability:**
+    * Employed **Common Table Expressions (CTEs)** extensively to break down complex problems into logical, readable, and maintainable steps.
+    * Utilized **Subqueries** (scalar, row, and table) for multi-layered calculations and dynamic filtering.
+* **Powerful Analytical Calculations with Window Functions:**
+    * **Ranking & Ordering:** Applied `RANK()`, `DENSE_RANK()`, and `ROW_NUMBER()` to determine top N records within partitions (e.g., top-rented films per category, most active customers).
+    * **Period-over-Period Analysis:** Leveraged `LAG()` and `LEAD()` to analyze trends, such as comparing month-over-month rental counts or revenue.
+    * **Running Totals & Moving Averages:** Used aggregate window functions like `SUM() OVER(...)` and `AVG() OVER(...)` for cumulative calculations without collapsing rows.
+* **Conditional Logic & Data Transformation:**
+    * Implemented **`CASE` statements** for dynamic data categorization (e.g., customer segmentation based on rental frequency) and conditional aggregations.
+    * Performed **data pivoting** using `CASE` within aggregate functions to transform row-level data into a columnar summary format.
+* **Advanced Aggregation & Grouping:** Skillfully used aggregate functions (`SUM()`, `COUNT()`, `AVG()`, `MAX()`) with `GROUP BY` and `HAVING` clauses for insightful summarizations.
+* **Date/Time & String Manipulation:**
+    * Effectively used date/time functions (`EXTRACT`, `DATE_TRUNC`, `AGE`, date arithmetic) for time-based analysis and filtering.
+    * Applied string functions (`CONCAT()`, `SUBSTRING()`, `LIKE`) for data cleaning and formatting.
+* **Analytical Problem Solving:** Translated specific business questions into precise and efficient SQL queries, extracting actionable insights from the data.
 
-* **Complex Joins:** Combining data from multiple tables in a star schema (INNER JOIN).
-* **Common Table Expressions (CTEs):** Structuring complex queries for readability and modularity.
-* **Subqueries:** Nesting queries for multi-step data filtering and calculations.
-* **Window Functions:**
-    * `RANK()` / `ROW_NUMBER()`: Ranking data within partitions (e.g., top films per rating, top actors).
-    * `LAG()` / `LEAD()`: Comparing data across rows (e.g., month-over-month analysis).
-    * Aggregate Window Functions: Performing calculations across specific windows without collapsing rows.
-* **Conditional Logic:** Using `CASE` statements for data categorization and conditional aggregation.
-* **Data Aggregation:** Employing functions like `SUM()`, `COUNT()`, `AVG()`, `MAX()` with `GROUP BY`.
-* **Date/Time Functions:** Extracting components (`EXTRACT`), calculating differences (`TIMEDIFF`), and filtering based on specific time windows (`BETWEEN`).
-* **String Manipulation:** Using functions like `CONCAT()` and `SUBSTRING()`.
-* **Pivoting Data:** Transforming data from rows to columns using `CASE` statements within aggregate functions.
-* **Data Filtering:** Advanced `WHERE` clause usage with `IN`, `BETWEEN`, `IS NOT NULL`, and logical operators (`AND`, `OR`).
+## Dataset & Schema Overview:
 
-## Dataset
+The analysis was performed on a relational database modeled after the **Sakila Sample Database**, representing a fictional DVD rental company. This database predominantly follows a star schema, optimized for analytical queries. Key tables included:
 
-The project utilizes a modified version of the **Sakila Sample Database**, representing a fictional DVD rental company named "Rentio". It follows a star schema, optimized for analytical queries.
+* **Fact Table:** `fact_rental` (central transactional data)
+* **Dimension Tables:** `dim_film`, `dim_customer`, `dim_store`, `dim_category`, `dim_actor`, `dim_staff`
+* **Bridge Table:** `bridge_actor` (many-to-many relationship between films and actors)
 
-**Key Tables:**
+## Approach: Solving Business Questions with SQL
 
-* `fact_rental`: Central fact table containing rental transaction details and foreign keys.
-* `dim_film`: Dimension table with film attributes (title, rating, category, etc.).
-* `dim_customer`: Dimension table with customer details.
-* `dim_store`: Dimension table with store information.
-* `dim_category`: Dimension table for film genres.
-* `dim_actor`: Dimension table for actors.
-* `dim_staff`: Dimension table for staff members.
-* `bridge_actor`: Bridge table connecting actors to rentals/films.
+The core of this project is captured within the **`Advanced SQL.ipynb`** Jupyter Notebook. My approach was to identify pertinent business questions relevant to a DVD rental operation and then craft advanced SQL queries to address them. Each query or set of queries in the notebook typically:
 
-**Database Schema:**
+1.  Poses a **Business Question** (e.g., "Which film categories generate the most rental revenue?").
+2.  Provides **Context** on its relevance.
+3.  Details the **Advanced SQL Query** I developed, showcasing specific techniques.
+4.  Presents the **Results/Insights** derived.
 
-![Database Schema](./images/star_schema_erd.png)
+### Spotlight on Advanced Techniques (Examples):
 
-## Project Structure
+While the notebook contains numerous examples, here's a glimpse into the types of problems I solved:
 
-.
-├── images/
-│   └── star_schema_erd.png  # Database schema diagram
-├── src/
-│   └── env                  # Environment variable configuration (template or actual)
-├── .env                     # Main environment file (if not in src/) - Add to .gitignore!
-├── Advanced SQL.ipynb   # Jupyter Notebook with analysis and queries
-└── README.md                # This file
+* **Identifying Top N Items per Group:** To find the top 3 most rented films within each film category, I utilized CTEs to first calculate rental counts per film and then applied the `RANK()` window function partitioned by category.
+* **Month-over-Month Growth Analysis:** To understand growth trends, I calculated monthly rental revenue and then used the `LAG()` window function to compare each month's revenue with the previous month, deriving a growth percentage.
+* **Customer Segmentation:** I employed `CASE` statements within aggregate queries to segment customers based on their rental frequency and monetary value (e.g., "High Value," "Medium Value," "Low Value").
+* **Pivoting Data for Reporting:** For a summary report showing rental counts per film rating across different stores, I used `CASE` statements inside `SUM()` to pivot the data, transforming ratings into columns.
 
-## Setup and Usage
+*(These are illustrative examples; the notebook provides the actual queries and detailed scenarios.)*
 
-To run the analysis presented in the Jupyter Notebook, follow these steps:
+## Technologies & Tools Used:
+
+* **Database:** MySQL (as per Sakila's origin, running on a local or cloud instance)
+* **SQL Dialect:** MySQL SQL
+* **Development Environment:** Jupyter Notebook / JupyterLab
+* **Key Python Libraries:** `ipython-sql` (for embedding SQL in notebooks), `pymysql` (MySQL connector), `python-dotenv` (for environment management), `pandas` (for displaying results).
+* **Version Control:** Git & GitHub
+
+## Exploring the Analysis:
+
+The detailed SQL queries, their explanations, and the resulting insights are available in the [Advanced SQL.ipynb](./Advanced%20SQL.ipynb) notebook within this repository. The setup instructions below guide you on how to replicate the environment if you wish to execute the queries yourself.
+
+## Setup and Usage:
+
+To run the analysis presented in the Jupyter Notebook:
 
 1.  **Prerequisites:**
-    * Python 3.x installed.
+    * Python 3.x
     * Access to a MySQL database instance.
-    * Jupyter Notebook or JupyterLab environment.
-
+    * Jupyter Notebook or JupyterLab.
 2.  **Database Setup:**
-    * Download and import the Sakila sample database schema and data into your MySQL instance. You can find resources online (e.g., [Official MySQL Documentation](https://dev.mysql.com/doc/sakila/en/)). Ensure the database name matches the one specified in your configuration.
-    * *(If you used a modified version, provide instructions or the SQL script to create it).*
-
-3.  **Clone Repository:**
+    * Load the Sakila sample database schema and data into your MySQL instance. (Ensure the database name matches your configuration, typically `sakila`).
+3.  **Clone Repository & Navigate:**
     ```bash
     git clone <your-repository-url>
-    cd <repository-directory>
+    cd <repository-directory-name>
     ```
-
-4.  **Install Dependencies:**
-    * It's recommended to use a virtual environment.
+4.  **Install Dependencies** (preferably in a virtual environment):
     ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    pip install ipython-sql pymysql python-dotenv jupyterlab pandas # Add other specific dependencies if any
     ```
-    * Install required Python packages:
-    ```bash
-    pip install ipython-sql pymysql python-dotenv jupyterlab pandas # Add other dependencies if used
-    ```
-    * *(Consider adding a `requirements.txt` file for easier installation: `pip install -r requirements.txt`)*
-
+    *(Consider creating a `requirements.txt` file: `pip freeze > requirements.txt` and instructing `pip install -r requirements.txt`)*
 5.  **Configure Environment Variables:**
-    * Create a `.env` file in the root directory (or `src/` depending on your notebook code). **Important:** Add `.env` to your `.gitignore` file to avoid committing credentials.
-    * Add your database connection details to the `.env` file:
-      ```env
-      DBHOST=your_database_host (e.g., localhost or an IP)
-      DBPORT=your_database_port (e.g., 3306)
-      DBNAME=sakila # Or your specific database name
-      DBUSER=your_database_username
-      DBPASSWORD=your_database_password
-      ```
-
+    * Create a `.env` file in the project root. **Important:** Add `.env` to your `.gitignore`!
+    * Populate `.env` with your MySQL connection details:
+        ```
+        DBHOST=your_database_host
+        DBPORT=your_database_port
+        DBNAME=sakila
+        DBUSER=your_database_username
+        DBPASSWORD=your_database_password
+        ```
 6.  **Run the Notebook:**
-    * Start JupyterLab or Jupyter Notebook:
-      ```bash
-      jupyter lab
-      # or
-      jupyter notebook
-      ```
-    * Open the `Advanced SQL.ipynb` file.
-    * Execute the cells sequentially to connect to the database and run the SQL queries. The notebook connects using the credentials from the `.env` file and utilizes the `ipython-sql` magic commands.
+    * Start JupyterLab: `jupyter lab`
+    * Open and execute the `Advanced SQL.ipynb` notebook.
 
-## Business Questions & SQL Queries
-
-The core of this project is presented within the `C3_W3_Assignment.ipynb` notebook. It is structured around specific business questions relevant to the DVD rental business. Each section outlines:
-
-1.  The **Business Question** being addressed.
-2.  The **Context** or reason why the question is relevant.
-3.  The **Advanced SQL Query** used to answer the question, often demonstrating one or more of the techniques listed under "Skills Demonstrated".
-4.  The **Expected Output** or result of the query.
-
-Please refer to the notebook for the detailed implementation and results.
+---
